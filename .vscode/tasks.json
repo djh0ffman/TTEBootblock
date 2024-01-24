@@ -1,0 +1,49 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "bootlbock-bin",
+			"type": "shell",
+			"command": "vasmm68k_mot",
+			"args": [
+				"bootblock.asm",
+				"-o",
+				"build\\bootblock",
+				"-m68000",
+				"-Fbin"
+			],
+			"group": "build"
+		},
+		{
+			"label": "asm-bootblock",
+			"type": "shell",
+			"command": "vasmm68k_mot",
+			"args": [
+				"bootblock.asm",
+				"-o",
+				"build\\bootblock.o",
+				"-m68000",
+				"-Fhunk",
+				"-linedebug",
+				"-ignore-mult-inc",
+				"-nowarn=2047",
+				"-nowarn=2069"
+			],
+			"group": "build"
+		},
+		{
+			"label": "build-bootblock",
+			"type": "shell",
+			"command": "vlink",
+			"args": [
+				"build\\bootblock.o",
+				"-ouae\\dh0\\bootblock",
+				"-bamigahunk",
+				"-Bstatic"
+			],
+			"group": "build",
+			"dependsOn": "asm-bootblock",
+			"problemMatcher": []
+		},
+	]
+}
